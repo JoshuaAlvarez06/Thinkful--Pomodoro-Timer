@@ -111,6 +111,20 @@ function Pomodoro() {
     });
   }
 
+  //Progress Bar function
+  let progressWidthValue = "0";
+  const progressBarWidth = () => {
+    if (session?.label === "On Break") {
+      progressWidthValue =
+        ((breakDuration - session?.timeRemaining / 60) / breakDuration) * 100;
+    } else {
+      progressWidthValue =
+        ((focusDuration - session?.timeRemaining / 60) / focusDuration) * 100;
+    }
+    return `${progressWidthValue}`;
+  };
+
+  //Function used to stop timer
   const stopSession = () => {
     setSession(() => {
       setIsTimerRunning(false);
@@ -163,8 +177,6 @@ function Pomodoro() {
                 })}
               />
             </button>
-            {/* TODO: Implement stopping the current focus or break session. and disable the stop button when there is no active session */}
-            {/* TODO: Disable the stop button when there is no active session */}
             <button
               type="button"
               className="btn btn-secondary"
@@ -185,6 +197,7 @@ function Pomodoro() {
         minutesToDuration={minutesToDuration}
         secondsToDuration={secondsToDuration}
         isTimerRunning={isTimerRunning}
+        progressBarWidth={progressBarWidth}
       />
     </div>
   );
